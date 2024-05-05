@@ -1,4 +1,4 @@
-package fix
+package scalafix.internal.rules
 
 import org.scalatest.funsuite.AnyFunSuiteLike
 import scalafix.testkit.AbstractSemanticRuleSuite

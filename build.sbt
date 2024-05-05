@@ -1,34 +1,33 @@
 lazy val V = _root_.scalafix.sbt.BuildInfo
+
 inThisBuild(
   List(
-    organization := "com.arun",
-    scalaVersion := V.scala212,
+    organization := "com.github.arun",
+    homepage := Some(
+      url("https://github.com/arunkmishra/ExtendedScalafixRules")
+    ),
+    licenses := List(
+      "Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")
+    ),
+    scalaVersion := V.scala213,
     crossScalaVersions := List(V.scala212, V.scala213),
     addCompilerPlugin(scalafixSemanticdb),
-    semanticdbEnabled := true,
-    semanticdbIncludeInJar := true,
-    semanticdbVersion := scalafixSemanticdb.revision,
-    scalacOptions ++= List("-Yrangepos"),
-    sbtPlugin := true,
-    publishMavenStyle := false,
-    // scalafixDependencies += "com.arun" %% "named-literal-arguments" % "0.0.0"
+    scalacOptions ++= List("-Yrangepos", "-P:semanticdb:synthetics:on")
   )
 )
 
-// (publish / skip) := true
+lazy val skipPublishSettings = {
+  (publish / skip) := true
+}
 
 lazy val rules = project.settings(
-  moduleName := "named-literal-arguments",
+  moduleName := "scalafix-rules",
   libraryDependencies += "ch.epfl.scala" %% "scalafix-core" % V.scalafixVersion,
 )
 
-lazy val input = project.settings(
-  (publish / skip) := true
-)
+lazy val input = project.settings(skipPublishSettings)
 
-lazy val output = project.settings(
-  (publish / skip) := true
-)
+lazy val output = project.settings(skipPublishSettings)
 
 lazy val tests = project
   .settings(
@@ -40,6 +39,6 @@ lazy val tests = project
     scalafixTestkitInputClasspath :=
       (input / Compile / fullClasspath).value
   )
-  .settings((publish / skip) := true)
+  .settings(skipPublishSettings)
   .dependsOn(input, rules)
   .enablePlugins(ScalafixTestkitPlugin)

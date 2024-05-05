@@ -1,4 +1,4 @@
-package fix
+package scalafix.internal.rules
 
 import metaconfig.Configured
 import scalafix.v1._

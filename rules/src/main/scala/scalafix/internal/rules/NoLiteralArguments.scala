@@ -1,4 +1,4 @@
-package fix
+package scalafix.internal.rules
 
 import metaconfig.Configured
 import scala.meta._
@@ -11,8 +11,8 @@ case class LiteralArgument(literal: Lit) extends Diagnostic {
 }
 
 case class NoLiteralArgumentsConfig(
-                                     disabledLiterals: List[String] = List("Boolean")
-                                   ) {
+  disabledLiterals: List[String] = List("Boolean")
+) {
   def isDisabled(lit: Lit): Boolean = {
     val kind = lit.productPrefix.stripPrefix("Lit.")
     disabledLiterals.contains(kind)
@@ -28,7 +28,7 @@ object NoLiteralArgumentsConfig {
 }
 
 class NoLiteralArguments(config: NoLiteralArgumentsConfig)
-  extends SyntacticRule("NoLiteralArguments") {
+    extends SyntacticRule("NoLiteralArguments") {
   def this() = this(NoLiteralArgumentsConfig.default)
   override def withConfiguration(config: Configuration): Configured[Rule] = {
     config.conf

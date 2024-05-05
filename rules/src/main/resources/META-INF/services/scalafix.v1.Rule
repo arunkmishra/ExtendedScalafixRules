@@ -1,2 +1,2 @@
-fix.NamedLiteralArguments
-fix.NoLiteralArguments
+scalafix.internal.rules.NamedLiteralArguments
+scalafix.internal.rules.NoLiteralArguments
